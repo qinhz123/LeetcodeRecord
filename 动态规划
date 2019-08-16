@@ -1,0 +1,17 @@
+private static final int MOD = 1000000007;
+
+    public int numRollsToTarget(int d, int f, int target) {
+        int[][] dp = new int[d][target+1];
+        for(int i = 1;i <= target;i++)
+            dp[0][i] = f >= i ? 1 : 0;
+        for(int row = 1;row < d;row++)
+            for(int col = 1;col <= target;col++){
+                int curNum = 0;
+                for(int k = 1;k <= f && col - k >= 0;k++){
+                    curNum += dp[row-1][col-k];
+                    curNum = curNum % MOD;
+                }
+                dp[row][col] = curNum;
+            }
+        return dp[d-1][target];
+    }
